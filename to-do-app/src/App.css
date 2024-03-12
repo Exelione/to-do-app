@@ -1,0 +1,27 @@
+.App {
+  text-align: center;
+}
+
+ul {
+  list-style-type: none;
+}
+
+li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+}
+.delete {
+  color: red;
+  transition: transform .3s ease;
+  
+}
+.delete:hover{
+  cursor: pointer;
+  transform: scale(1.6);
+  
+}
+input:checked + span {
+  text-decoration: line-through;
+}
