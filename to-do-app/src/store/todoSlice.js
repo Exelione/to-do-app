@@ -7,11 +7,12 @@ const todoSlice = createSlice({
     },
     reducers: {
         addTodo(state, action) {
-            state.todos.push({
+            if(action.payload.text.trim(''))
+            {state.todos.push({
                 id: new Date().toISOString(),
                 text: action.payload.text,
                 compleated: false
-            })
+            })}
         },
         delTodo(state, action){
             state.todos = state.todos.filter(todo => todo.id !== action.payload.id)
