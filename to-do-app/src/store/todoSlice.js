@@ -7,16 +7,24 @@ const todoSlice = createSlice({
     },
     reducers: {
         addTodo(state, action) {
-            console.log(state)
-            console.log(action)
             state.todos.push({
                 id: new Date().toISOString(),
                 text: action.payload.text,
                 compleated: false
             })
         },
-        delTodo(state, action){},
-        toggleCompliteTodo(state, action){}
+        delTodo(state, action){
+            state.todos = state.todos.filter(todo => todo.id !== action.payload.id)
+        },
+        toggleCompliteTodo(state, action){
+            state.todos = state.todos.map(todo => {
+                if(todo.id !== action.payload.id) return todo;
+                return {
+                    ...todo,
+                    compleated: !todo.compleated
+                }
+            })
+        }
     }
 
 })
