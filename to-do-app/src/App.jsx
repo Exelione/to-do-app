@@ -13,6 +13,7 @@ function App() {
     setText('')
   }
   return (
+    <div className="wrapper">
     <div className="App">
       <TodoFileld 
       text={text}
@@ -21,6 +22,7 @@ function App() {
       />
      
       <TodoList/>
+    </div>
     </div>
   );
 }
