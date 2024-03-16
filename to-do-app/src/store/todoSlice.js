@@ -1,18 +1,31 @@
-import {createSlice} from '@reduxjs/toolkit';
+import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 
+
+export const fetchTodos = createAsyncThunk(
+    'todos/fetchTodos',
+    async function () {
+        const response = await fetch('https://jsonplaceholder.typicode.com/todos')
+        const data = await response.json()
+        return data;
+    }
+)
 const todoSlice = createSlice({
     name: 'todos',
+
     initialState: {
-        todos: []
+        todos: [],
+        status: null,
+        error: null
     },
+
     reducers: {
         addTodo(state, action) {
-            if(action.payload.text.trim(''))
-            {state.todos.push({
+            
+            state.todos.push({
                 id: new Date().toISOString(),
                 text: action.payload.text,
                 compleated: false
-            })}
+            })
         },
         delTodo(state, action){
             state.todos = state.todos.filter(todo => todo.id !== action.payload.id)
@@ -26,6 +39,20 @@ const todoSlice = createSlice({
                 }
             })
         }
+    },
+    extraReducers: (builder)=>{
+        builder.addCase(fetchTodos.pending, (state) => {
+            state.status = 'loading';
+            state.error = null;
+        });
+        builder.addCase(fetchTodos.fulfilled, (state, action) => {
+            state.status = 'resolved';
+            state.todos = action.payload;
+            
+        });
+        builder.addCase(fetchTodos.rejected, (state, action) => {});
+        // builder.addCase(delTodo.rejected, (state, action) => {});
+        // builder.addCase(toggleCompliteTodo.rejected, (state, action) => {});
     }
 
 })
