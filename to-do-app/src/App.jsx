@@ -1,24 +1,31 @@
 import {useDispatch} from "react-redux";
-import { addTodo } from "./store/todoSlice";
-import { useState } from 'react';
+import { addTodo, fetchTodos } from "./store/todoSlice";
+import { useEffect, useState } from 'react';
 import './App.css';
 import TodoList from './components/TodoList';
 import TodoFileld from './components/TodoFileld';
 
 function App() {
-  const [text, setText] = useState('')
+  const [title, setTitle] = useState('')
   const dispatch = useDispatch()
   const addTask = () => {
-    dispatch(addTodo({text}))
-    setText('')
+    if(title.trim('').length){
+    dispatch(addTodo({title}))
+    setTitle('')
+    }
   }
+
+  useEffect( () => {
+    dispatch(fetchTodos());
+  }, [dispatch])
+
   return (
     <div className="wrapper">
     <div className="App">
       <TodoFileld 
-      text={text}
+      title={title}
       handleSubmit={addTask}
-      handleInput={setText}
+      handleInput={setTitle}
       />
      
       <TodoList/>
