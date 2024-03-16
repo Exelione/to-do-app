@@ -23,8 +23,8 @@ const todoSlice = createSlice({
             
             state.todos.push({
                 id: new Date().toISOString(),
-                text: action.payload.text,
-                compleated: false
+                title: action.payload.title,
+                completed: false
             })
         },
         delTodo(state, action){
@@ -35,7 +35,7 @@ const todoSlice = createSlice({
                 if(todo.id !== action.payload.id) return todo;
                 return {
                     ...todo,
-                    compleated: !todo.compleated
+                    completed: !todo.completed
                 }
             })
         }

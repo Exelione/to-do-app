@@ -6,12 +6,12 @@ import TodoList from './components/TodoList';
 import TodoFileld from './components/TodoFileld';
 
 function App() {
-  const [text, setText] = useState('')
+  const [title, setTitle] = useState('')
   const dispatch = useDispatch()
   const addTask = () => {
-    if(text.trim('').length){
-    dispatch(addTodo({text}))
-    setText('')
+    if(title.trim('').length){
+    dispatch(addTodo({title}))
+    setTitle('')
     }
   }
 
@@ -23,9 +23,9 @@ function App() {
     <div className="wrapper">
     <div className="App">
       <TodoFileld 
-      text={text}
+      title={title}
       handleSubmit={addTask}
-      handleInput={setText}
+      handleInput={setTitle}
       />
      
       <TodoList/>

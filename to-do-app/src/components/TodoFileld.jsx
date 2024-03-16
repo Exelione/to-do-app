@@ -1,9 +1,9 @@
 import React from 'react'
 
-const TodoFileld = ({text, handleSubmit, handleInput}) => {
+const TodoFileld = ({title, handleSubmit, handleInput}) => {
   return (
     <label>
-      <input value={text} onChange={(event) => handleInput(event.target.value)} />
+      <input value={title} onChange={(event) => handleInput(event.target.value)} />
       <button onClick={handleSubmit}>Add Todo</button>
     </label>
   )
