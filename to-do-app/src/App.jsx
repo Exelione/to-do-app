@@ -1,21 +1,22 @@
-import {useDispatch} from "react-redux";
-import { addTodo, fetchTodos } from "./store/todoSlice";
+import {useDispatch, useSelector} from "react-redux";
+import { addNewTodo, fetchTodos } from "./store/todoSlice";
 import { useEffect, useState } from 'react';
 import './App.css';
 import TodoList from './components/TodoList';
 import TodoFileld from './components/TodoFileld';
 
 function App() {
-  const [title, setTitle] = useState('')
+  const [text, setText] = useState('')
+  const {status, error} = useSelector(state => state.todos)
   const dispatch = useDispatch()
   const addTask = () => {
-    if(title.trim('').length){
-    dispatch(addTodo({title}))
-    setTitle('')
+    if(text.trim('').length){
+    dispatch(addNewTodo(text))
+    setText('')
     }
   }
 
-  useEffect( () => {
+  useEffect(() => {
     dispatch(fetchTodos());
   }, [dispatch])
 
@@ -23,10 +24,12 @@ function App() {
     <div className="wrapper">
     <div className="App">
       <TodoFileld 
-      title={title}
+      title={text}
       handleSubmit={addTask}
-      handleInput={setTitle}
+      handleInput={setText}
       />
+      {status === 'loading' && <h2>Loading...</h2>}
+      {error && <h2>An error occurred: {error}</h2>}
      
       <TodoList/>
     </div>
